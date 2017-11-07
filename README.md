@@ -3,14 +3,14 @@
 # RoboND-MCLLab
 Students will be able to observe `MCL` in action through the generated images. 
 
-## Compiling and Running the Program:
+### Compiling and Running the Program:
 ```sh
 $ git clone https://github.com/udacity/RoboND-MCLLab
 $ cd RoboND-MCLLab/
 $ g++ MCL.cpp -o app -std=c++11
 $ ./app
 ```
-## Example of Generated Images
+### Example of Generated Images
 #### Step1:
 ![alt text](Step1.png)
 #### Step12:
