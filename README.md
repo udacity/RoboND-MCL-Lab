@@ -5,10 +5,10 @@ Students will be able to observe `MCL` in action through the generated images.
 
 ## Compiling and Running the Program:
 ```sh
-$ mkdir -p ~/catkin_ws/src
-$ cd ~/catkin_ws/src
-$ catkin_init_workspace
-ewfewfwfw$ catkin_make
+$ git clone https://github.com/udacity/RoboND-MCLLab
+$ cd RoboND-MCLLab/
+$ g++ MCL.cpp -o app -std=c++11
+$ ./app
 ```
 ## Example of Generated Images
 #### Step1:
