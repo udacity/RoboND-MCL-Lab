@@ -2,7 +2,8 @@
 
 # RoboND-MCLLab
 Students will be able to observe `MCL` in action through the generated images. 
-asdasd## Compiling and Running the Program:
+
+## Compiling and Running the Program:
 ```sh
 $ mkdir -p ~/catkin_ws/src
 $ cd ~/catkin_ws/src
@@ -10,5 +11,8 @@ $ catkin_init_workspace
 ewfewfwfw$ catkin_make
 ```
 ## Example of Generated Images
+#### Step1:
 ![alt text](Step1.png)
-wf
+#### Step12:
+![alt text](Step12.png)
+
