@@ -17,8 +17,8 @@ $ ./app
 ```
 
 ### Generated Images:
-#### Step1:
+#### Step0:
 ![alt text](Images/Step0.png)
-#### Step12:
+#### Step49:
 ![alt text](Images/Step49.png)
 
