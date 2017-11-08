@@ -3,14 +3,20 @@
 # RoboND-MCLLab
 Students will be able to observe `MCL` in action through the generated images. 
 
-### Compiling and Running the Program:
+### Compiling the Program:
 ```sh
 $ git clone https://github.com/udacity/RoboND-MCLLab
 $ cd RoboND-MCLLab/
-$ g++ MCL.cpp -o app -std=c++11
+$ g++ MCL.cpp -o app -std=c++11 -I/usr/include/python2.7 -lpython2.7
+```
+
+### Running the Program:
+Before you run the program, make sure the Images folder is empty!
+```sh
 $ ./app
 ```
-### Example of Generated Images
+
+### Generated Images:
 #### Step1:
 ![alt text](Images/Step0.png)
 #### Step12:
