@@ -12,7 +12,7 @@ $ ./app
 ```
 ### Example of Generated Images
 #### Step1:
-![alt text](Step1.png)
+![alt text](Step0.png)
 #### Step12:
-![alt text](Step12.png)
+![alt text](Step49.png)
 

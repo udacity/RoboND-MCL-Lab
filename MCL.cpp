@@ -1,31 +1,32 @@
-// To compile g++ MCL.cpp -o app -std=c++11 //
-//-I/usr/include/python2.7 -lpython2.7
-//Format: http://format.krzaq.cc/
+// To compile g++ MCL.cpp -o app -std=c++11 -I/usr/include/python2.7 -lpython2.7
+////Format: http://format.krzaq.cc/
 
+#include "src/matplotlibcpp.h"
 #include <iostream>
 #include <string>
 #include <math.h>
 #include <random> //C++ 11 Random
 
+namespace plt = matplotlibcpp;
 using namespace std;
 
-// Landmarks
-double landmarks[8][2] = { { 20.0, 20.0 }, { 20.0, 80.0 }, { 20.0, 50.0 }, { 50.0, 20.0 },
-    { 50.0, 80.0 }, { 80.0, 80.0 }, { 80.0, 20.0 }, { 80.0, 50.0 } };
+//Landmarks
+double landmarks[8][2] = { { 20.0, 20.0 }, { 20.0, 80.0 }, { 20.0, 50.0 },
+    { 50.0, 20.0 }, { 50.0, 80.0 }, { 80.0, 80.0 },
+    { 80.0, 20.0 }, { 80.0, 50.0 } };
 
-// Map size in meters
+//Map size in meters
 double world_size = 100.0;
 
-// Random Generators
+//Random Generators
 random_device rd;
 mt19937 gen(rd());
 
-// Functions
+//Functions
 double mod(double first_term, double second_term);
 double gen_real_random();
 
-class Robot
-{
+class Robot {
 public:
     Robot()
     {
@@ -33,9 +34,9 @@ public:
         y = gen_real_random() * world_size; // robot's y coordinate
         orient = gen_real_random() * 2.0 * M_PI; // robot's orientation
 
-        forward_noise = 0.0; // noise of the forward movement
-        turn_noise = 0.0; // noise of the turn
-        sense_noise = 0.0; // noise of the sensing
+        forward_noise = 0.0; //noise of the forward movement
+        turn_noise = 0.0; //noise of the turn
+        sense_noise = 0.0; //noise of the sensing
     }
 
     void set(double new_x, double new_y, double new_orient)
@@ -61,11 +62,11 @@ public:
 
     double* sense()
     {
+
         static double z[sizeof(landmarks) / sizeof(landmarks[0])];
         double dist;
 
-        for (int i = 0; i < sizeof(landmarks) / sizeof(landmarks[0]); i++)
-        {
+        for (int i = 0; i < sizeof(landmarks) / sizeof(landmarks[0]); i++) {
             dist = sqrt(pow((x - landmarks[i][0]), 2) + pow((y - landmarks[i][1]), 2));
             dist += gen_gauss_random(0.0, sense_noise);
             z[i] = dist;
@@ -108,8 +109,7 @@ public:
     {
         double* z = sense();
         string readings = "[ ";
-        for (int i = 0; i < sizeof(z); i++)
-        {
+        for (int i = 0; i < sizeof(z); i++) {
             readings += to_string(z[i]) + " ";
         }
         readings += "]";
@@ -122,8 +122,7 @@ public:
         double prob = 1.0;
         double dist;
 
-        for (int i = 0; i < sizeof(landmarks) / sizeof(landmarks[0]); i++)
-        {
+        for (int i = 0; i < sizeof(landmarks) / sizeof(landmarks[0]); i++) {
             dist = sqrt(pow((x - landmarks[i][0]), 2) + pow((y - landmarks[i][1]), 2));
             prob *= gaussian(dist, sense_noise, measurement[i]);
         }
@@ -131,42 +130,40 @@ public:
         return prob;
     }
 
-    double x, y, orient; // robot poses
-    double forward_noise, turn_noise, sense_noise; // robot noises
+    double x, y, orient; //robot poses
+    double forward_noise, turn_noise, sense_noise; //robot noises
 
 private:
     double gen_gauss_random(double mean, double variance)
-    { // Gaussian random
+    { //Gaussian random
         normal_distribution<double> gauss_dist(mean, variance);
         return gauss_dist(gen);
     }
 
     double gaussian(double mu, double sigma, double x)
     {
-        // Probability of x for 1-dim Gaussian with mean mu and var. sigma
-        return exp(-(pow((mu - x), 2)) / (pow(sigma, 2)) / 2.0)
-            / sqrt(2.0 * M_PI * (pow(sigma, 2)));
+        //Probability of x for 1-dim Gaussian with mean mu and var. sigma
+        return exp(-(pow((mu - x), 2)) / (pow(sigma, 2)) / 2.0) / sqrt(2.0 * M_PI * (pow(sigma, 2)));
     }
 };
 
-// Functions
+//Functions
 double gen_real_random()
-{ // Generate real random between 0 and 1
-    uniform_real_distribution<double> real_dist(0.0, 1.0); // Real
+{ //Generate real random between 0 and 1
+    uniform_real_distribution<double> real_dist(0.0, 1.0); //Real
     return real_dist(gen);
 }
 
 double mod(double first_term, double second_term)
-{ // modulus
+{ //modulus
     return first_term - (second_term)*floor(first_term / (second_term));
 }
 
 double evaluation(Robot r, Robot p[], int n)
-{ // Calculate the mean error of the system
+{ //Calculate the mean error of the system
     double sum = 0.0;
-    for (int i = 0; i < n; i++)
-    {
-        // the second part is because of world's cyclicity
+    for (int i = 0; i < n; i++) {
+        //the second part is because of world's cyclicity
         double dx = mod((p[i].x - r.x + (world_size / 2.0)), world_size) - (world_size / 2.0);
         double dy = mod((p[i].y - r.y + (world_size / 2.0)), world_size) - (world_size / 2.0);
         double err = sqrt(pow(dx, 2) + pow(dy, 2));
@@ -177,123 +174,140 @@ double evaluation(Robot r, Robot p[], int n)
 double max(double arr[], int n)
 {
     double max = 0;
-    for (int i = 0; i < n; i++)
-    {
+    for (int i = 0; i < n; i++) {
         if (arr[i] > max)
             max = arr[i];
     }
     return max;
 }
 
+void visualization(int n, Robot robot, int step, Robot p[], Robot pr[])
+{
+    //Graph Format
+    plt::title("MCL, step " + to_string(step));
+    plt::xlim(0, 100);
+    plt::ylim(0, 100);
+
+    //Draw Particles
+    for (int i = 0; i < n; i++) {
+        plt::plot({ p[i].x }, { p[i].y }, "go");
+    }
+
+    //Draw Resampled Particles
+    for (int i = 0; i < n; i++) {
+        plt::plot({ pr[i].x }, { pr[i].y }, "yo");
+    }
+
+    //Drawing Landmarks
+    for (int i = 0; i < sizeof(landmarks) / sizeof(landmarks[0]); i++) {
+        plt::plot({ landmarks[i][0] }, { landmarks[i][1] }, "ro");
+    }
+    //Draw Robot
+    plt::plot({ robot.x }, { robot.y }, "bo");
+
+    plt::save("./Images/Step" + to_string(step) + ".png");
+    plt::clf();
+}
+
 int main()
 {
-    // create a robot
+    //create a robot
     Robot myrobot;
-    // cout << myrobot.show_pose() << endl;
+    //cout << myrobot.show_pose() << endl;
 
     // set noise parameters
     myrobot.set_noise(5.0, 0.1, 5.0);
 
     // set robot's initial position and orientation
     myrobot.set(30.0, 50.0, M_PI / 2.0);
-    // cout << myrobot.show_pose() << endl;
+    //cout << myrobot.show_pose() << endl;
 
     // clockwise turn and move
     myrobot.move(-M_PI / 2.0, 15.0);
-    // cout << myrobot.show_pose() << endl;
+    //cout << myrobot.show_pose() << endl;
 
-    // Robot Sense
-    // cout << myrobot.read_sensors() << endl;
+    //Robot Sense
+    //cout << myrobot.read_sensors() << endl;
 
-    // clockwise turn again and move
+    //clockwise turn again and move
     myrobot.move(-M_PI / 2., 10.);
-    // cout << myrobot.show_pose() << endl;
+    //cout << myrobot.show_pose() << endl;
 
-    // Robot Sense
-    // cout << myrobot.read_sensors() << endl;
+    //Robot Sense
+    //cout << myrobot.read_sensors() << endl;
 
-    // cout << endl;
-    // cout << endl;
+    //cout << endl;
+    //cout << endl;
 
-    // create a robot for the particle filter demo
+    //create a robot for the particle filter demo
     myrobot = Robot();
     myrobot.move(0.1, 5.0);
     double* z;
     z = myrobot.sense();
-    // cout << "z= " ;
-    for (int i = 0; i < sizeof(z); i++)
-    {
-        // cout << z[i] << " ";
+    //cout << "z= " ;
+    for (int i = 0; i < sizeof(z); i++) {
+        //cout << z[i] << " ";
     }
-    // cout << "\n" << "myrobot= " << myrobot.show_pose() << endl;
+    //cout << "\n" << "myrobot= " << myrobot.show_pose() << endl;
 
     // create a set of particles
     int n = 1000;
     Robot p[n];
 
-    for (int i = 0; i < n; i++)
-    {
+    for (int i = 0; i < n; i++) {
         Robot x;
         x.set_noise(0.05, 0.05, 5.0);
         p[i] = x;
     }
 
-    int steps = 50; // particle filter steps should be 50 ////
-    for (int t = 0; t < steps; t++)
-    {
-        // move the robot and sense the environment after that
+    int steps = 50;
+    for (int t = 0; t < steps; t++) {
+        //move the robot and sense the environment after that
         myrobot = myrobot.move(0.1, 5.0);
         z = myrobot.sense();
 
         // now we simulate a robot motion for each of these particles
         Robot p2[n];
-        for (int i = 0; i < n; i++)
-        {
+        for (int i = 0; i < n; i++) {
             p2[i] = p[i].move(0.1, 5.0);
         }
-        for (int i = 0; i < n; i++)
-        {
+        for (int i = 0; i < n; i++) {
             p[i] = p2[i];
         }
 
-        // generate particle weights depending on robot's measurement
+        //generate particle weights depending on robot's measurement
         double w[n];
-        for (int i = 0; i < n; i++)
-        {
+        for (int i = 0; i < n; i++) {
             w[i] = p[i].measurement_prob(z);
-            // cout << w[i] << endl;
+            //cout << w[i] << endl;
         }
 
-        // resampling with a sample probability proportional to the importance
-        // weight
+        //resampling with a sample probability proportional to the importance weight
         Robot p3[n];
         int index = gen_real_random() * n;
-        // cout << index << endl;
+        //cout << index << endl;
         double beta = 0.0;
         double mw = max(w, n);
-        // cout << mw;
-        for (int i = 0; i < n; i++)
-        {
+        //cout << mw;
+        for (int i = 0; i < n; i++) {
             beta += gen_real_random() * 2.0 * mw;
-            while (beta > w[index])
-            {
+            while (beta > w[index]) {
                 beta -= w[index];
                 index = mod((index + 1), n);
             }
             p3[i] = p[index];
         }
-        // here we get a set of co-located particles
-        for (int i = 0; i < n; i++)
-        {
+        //here we get a set of co-located particles
+        for (int i = 0; i < n; i++) {
             p[i] = p3[i];
-            // cout << p[i].show_pose() << endl;
+            //cout << p[i].show_pose() << endl;
         }
 
         cout << "Step = " << t << ", Evaluation = " << evaluation(myrobot, p, n) << endl;
 
-        // visualization(myrobot, t, p2, p3, w)
+        visualization(n, myrobot, t, p2, p3);
 
-    } // End of Steps loop
+    } //End of Steps loop
 
     return 0;
 }
