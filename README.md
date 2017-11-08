@@ -11,7 +11,7 @@ $ g++ MCL.cpp -o app -std=c++11 -I/usr/include/python2.7 -lpython2.7
 ```
 
 ### Running the Program:
-Before you run the program, make sure the Images folder is empty!
+Before you run the program, make sure the `Images` folder is empty!
 ```sh
 $ ./app
 ```
