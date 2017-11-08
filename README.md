@@ -15,9 +15,10 @@ Before you run the program, make sure the `Images` folder is empty!
 ```sh
 $ ./app
 ```
+Wait for the program to iterate `50` times.
 
 ### Generated Images:
-After running the program, 50 images will be generated in the `Images` folder.
+After running the program, `50` images will be generated in the `Images` folder.
 #### Step0:
 ![alt text](Images/Step0.png)
 #### Step49:
