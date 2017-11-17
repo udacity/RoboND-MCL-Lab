@@ -285,6 +285,7 @@ int main()
             p[i] = p3[i];
             //cout << p[i].show_pose() << endl;
         }
+        
         //Evaluate the Error
         cout << "Step = " << t << ", Evaluation = " << evaluation(myrobot, p, n) << endl;
         
@@ -292,5 +293,6 @@ int main()
         visualization(n, myrobot, t, p2, p3);
 
     } //End of Steps loop
+    
     return 0;
 }
