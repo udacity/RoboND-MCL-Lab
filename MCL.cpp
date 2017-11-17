@@ -285,9 +285,10 @@ int main()
             p[i] = p3[i];
             //cout << p[i].show_pose() << endl;
         }
-
+        //Evaluate the Error
         cout << "Step = " << t << ", Evaluation = " << evaluation(myrobot, p, n) << endl;
-
+        
+        //Graph the position of the robot and the particles 
         visualization(n, myrobot, t, p2, p3);
 
     } //End of Steps loop
