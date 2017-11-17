@@ -7,7 +7,7 @@ Students will be able to observe `MCL` in action through the generated images.
 ```sh
 $ git clone https://github.com/udacity/RoboND-MCLLab
 $ cd RoboND-MCLLab/
-$ g++ MCL.cpp -o app -std=c++11 -I/usr/include/python2.7 -lpython2.7
+$ g++ main.cpp -o app -std=c++11 -I/usr/include/python2.7 -lpython2.7
 ```
 
 ### Running the Program:
