@@ -1,7 +1,15 @@
 [![Udacity - Robotics NanoDegree Program](https://s3-us-west-1.amazonaws.com/udacity-robotics/Extra+Images/RoboND_flag.png)](https://www.udacity.com/robotics)
 
 # RoboND-MCLLab
-Students will be able to observe `MCL` in action through the generated images. 
+You will be able to observe the `MCL` in action through the generated images. 
+
+### Editing the Program:
+Enter the code in the designated section:
+```C++
+//####   DON'T MODIFY ANYTHING ABOVE HERE! ENTER CODE BELOW ####
+		
+//Graph the position of the robot and the particles at each step 
+```
 
 ### Compiling the Program:
 ```sh
