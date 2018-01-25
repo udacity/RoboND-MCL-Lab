@@ -13,8 +13,8 @@ Enter the code in the designated section:
 
 ### Compiling the Program:
 ```sh
-$ git clone https://github.com/udacity/RoboND-MCLLab
-$ cd RoboND-MCLLab/
+$ git clone https://github.com/udacity/RoboND-MCL-Lab
+$ cd RoboND-MCL-Lab/
 $ rm Images/*
 $ g++ main.cpp -o app -std=c++11 -I/usr/include/python2.7 -lpython2.7
 ```
