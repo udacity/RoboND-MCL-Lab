@@ -5,6 +5,7 @@
 #include <math.h>
 #include <stdexcept> // throw errors
 #include <random> //C++ 11 Random Numbers
+#include <vector>
 
 namespace plt = matplotlibcpp;
 using namespace std;
@@ -62,16 +63,16 @@ public:
         sense_noise = new_sense_noise;
     }
 
-    double* sense()
+    vector<double> sense()
     {
         // Measure the distances from the robot toward the landmarks
-        static double z[sizeof(landmarks) / sizeof(landmarks[0])];
+        vector<double> z(sizeof(landmarks) / sizeof(landmarks[0]));
         double dist;
 
         for (int i = 0; i < sizeof(landmarks) / sizeof(landmarks[0]); i++) {
             dist = sqrt(pow((x - landmarks[i][0]), 2) + pow((y - landmarks[i][1]), 2));
             dist += gen_gauss_random(0.0, sense_noise);
-            z[i] = dist;
+            z[i]=dist;
         }
         return z;
     }
@@ -111,7 +112,7 @@ public:
     string read_sensors()
     {
         // Returns all the distances from the robot toward the landmarks
-        double* z = sense();
+        vector<double> z = sense();
         string readings = "[";
         for (int i = 0; i < sizeof(z); i++) {
             readings += to_string(z[i]) + " ";
@@ -121,7 +122,7 @@ public:
         return readings;
     }
 
-    double measurement_prob(double measurement[])
+    double measurement_prob(vector<double> measurement)
     {
         // Calculates how likely a measurement should be
         double prob = 1.0;
@@ -245,7 +246,7 @@ int main()
 
     //Re-initialize myrobot object and Initialize a measurment vector
     myrobot = Robot();
-    double* z;
+    vector<double> z;
 
     //Iterating 50 times over the set of particles
     int steps = 50;
