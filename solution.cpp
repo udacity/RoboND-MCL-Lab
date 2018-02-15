@@ -72,7 +72,7 @@ public:
         for (int i = 0; i < sizeof(landmarks) / sizeof(landmarks[0]); i++) {
             dist = sqrt(pow((x - landmarks[i][0]), 2) + pow((y - landmarks[i][1]), 2));
             dist += gen_gauss_random(0.0, sense_noise);
-            z[i]=dist;
+            z[i] = dist;
         }
         return z;
     }
@@ -284,19 +284,21 @@ int main()
                 index = mod((index + 1), n);
             }
             p3[i] = p[index];
-            p[i] = p3[i];
-            //cout << p[i].show_pose() << endl;
         }
-        
+        for (int k = 0; k < n; k++) {
+            p[k] = p3[k];
+            //cout << p[k].show_pose() << endl;
+        }
+
         //Evaluate the Error
         cout << "Step = " << t << ", Evaluation = " << evaluation(myrobot, p, n) << endl;
-        
+
         //####   DON'T MODIFY ANYTHING ABOVE HERE! ENTER CODE BELOW ####
-		
+
         //Graph the position of the robot and the particles at each step
         visualization(n, myrobot, t, p2, p3);
 
     } //End of Steps loop
-    
+
     return 0;
 }
