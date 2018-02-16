@@ -114,7 +114,7 @@ public:
         // Returns all the distances from the robot toward the landmarks
         vector<double> z = sense();
         string readings = "[";
-        for (int i = 0; i < sizeof(z); i++) {
+        for (int i = 0; i < z.size(); i++) {
             readings += to_string(z[i]) + " ";
         }
         readings[readings.size() - 1] = ']';
