@@ -8,7 +8,7 @@ Enter the code in the designated section:
 ```C++
 //####   DON'T MODIFY ANYTHING ABOVE HERE! ENTER CODE BELOW ####
 		
-//Graph the position of the robot and the particles at each step 
+//TODO: Graph the position of the robot and the particles at each step 
 ```
 
 ### Compiling the Program
