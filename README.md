@@ -38,6 +38,6 @@ using gtest.
 ### Generated Images
 After running the program, `50` images will be generated in the `Images` folder.
 
-![alt text](Images/Step0.png)
+![alt text](Images/particle_filter.gif)
 
 
